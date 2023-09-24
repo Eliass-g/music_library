@@ -57,12 +57,8 @@ const printTracks = function() {
 const printPlaylist = function(playlistId) {
   let tracks1 = library.playlists[playlistId].tracks;
   console.log(`${playlistId}: ${library.playlists[playlistId].name}: - ${tracks1.length} tracks`);
-  for (let key1 in library.tracks) {
-    for (let key2 of tracks1) {
-      if (key1 === key2) {
-        console.log(`${key1}: ${library.tracks[key1].name} by ${library.tracks[key1].artist} (${library.tracks[key1].album})`);
-      }
-    }
+  for (let key1 of tracks1) {
+    console.log(`${key1}: ${library.tracks[key1].name} by ${library.tracks[key1].artist} (${library.tracks[key1].album})`);
   }
 };
 
