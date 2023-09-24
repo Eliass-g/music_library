@@ -20,7 +20,67 @@ const library = {
                       name: "Other Playlist",
                       tracks: ["t03"]
                     }
-             }
+             },
+
+  printPlaylists: function() {
+    for (let key in this.playlists) {
+      console.log(`${key}: ${this.playlists[key].name} - ${this.playlists[key].tracks.length} tracks`);
+    }
+  },
+
+  printTracks: function() {
+    for (let key in this.tracks) {
+      console.log(`${key}: ${this.tracks[key].name} by ${this.tracks[key].artist} (${this.tracks[key].album})`);
+    }
+  },
+
+  printPlaylist: function(playlistId) {
+    let tracks1 = this.playlists[playlistId].tracks;
+    console.log(`${playlistId}: ${this.playlists[playlistId].name}: - ${tracks1.length} tracks`);
+    for (let key1 of tracks1) {
+      console.log(`${key1}: ${this.tracks[key1].name} by ${this.tracks[key1].artist} (${this.tracks[key1].album})`);
+    }
+  },
+
+  addTrackToPlaylist: function(trackId, playlistId) {
+    this.playlists[playlistId].tracks.push(trackId);
+  },
+
+  generateUid: function() {
+    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+  },
+
+  addTrack: function(name, artist, album) {
+    const idTrack = this.generateUid();
+    this.tracks[idTrack] = {};
+    this.tracks[idTrack].id = idTrack;
+    this.tracks[idTrack].name = name;
+    this.tracks[idTrack].artist = artist;
+    this.tracks[idTrack].album = album;
+  },
+
+  addPlaylist: function(name) {
+    const idPlaylist = this.generateUid();
+    this.playlists[idPlaylist] = {};
+    this.playlists[idPlaylist].id = idPlaylist;
+    this.playlists[idPlaylist].name = name;
+    this.playlists[idPlaylist].tracks = [];
+  },
+
+  printSearchResults: function(query) {
+    let result = [];
+    let query2 = query.toLowerCase();
+    for (let key in this.tracks) {
+      if (this.tracks[key].name.toLowerCase().search(query2) !== -1) {
+        result.push(key);
+      } else if (this.tracks[key].artist.toLowerCase().search(query2) !== -1) {
+        result.push(key);
+      } else if (this.tracks[key].album.toLowerCase().search(query2) !== -1) {
+        result.push(key);
+      }
+    }
+    console.log(result);
+  }
 };
 
 /////////////////////////////
@@ -30,11 +90,11 @@ const library = {
 // prints a list of all playlists, in the form:
 // p01: Coding Music - 2 tracks
 // p02: Other Playlist - 1 tracks
-const printPlaylists = function() {
+/* const printPlaylists = function() {
   for (let key in library.playlists) {
     console.log(`${key}: ${library.playlists[key].name} - ${library.playlists[key].tracks.length} tracks`);
   }
-};
+}; */
 
 //printPlaylists();
 
@@ -42,11 +102,11 @@ const printPlaylists = function() {
 // t01: Code Monkey by Jonathan Coulton (Thing a Week Three)
 // t02: Model View Controller by James Dempsey (WWDC 2003)
 // t03: Four Thirty-Three by John Cage (Woodstock 1952)
-const printTracks = function() {
+/* const printTracks = function() {
   for (let key in library.tracks) {
     console.log(`${key}: ${library.tracks[key].name} by ${library.tracks[key].artist} (${library.tracks[key].album})`);
   }
-};
+}; */
 
 //printTracks();
 
@@ -54,20 +114,20 @@ const printTracks = function() {
 // p01: Coding Music - 2 tracks
 // t01: Code Monkey by Jonathan Coulton (Thing a Week Three)
 // t02: Model View Controller by James Dempsey (WWDC 2003)
-const printPlaylist = function(playlistId) {
+/* const printPlaylist = function(playlistId) {
   let tracks1 = library.playlists[playlistId].tracks;
   console.log(`${playlistId}: ${library.playlists[playlistId].name}: - ${tracks1.length} tracks`);
   for (let key1 of tracks1) {
     console.log(`${key1}: ${library.tracks[key1].name} by ${library.tracks[key1].artist} (${library.tracks[key1].album})`);
   }
-};
+}; */
 
 //printPlaylist('p01');
 
 // adds an existing track to an existing playlist
-const addTrackToPlaylist = function(trackId, playlistId) {
+/* const addTrackToPlaylist = function(trackId, playlistId) {
   library.playlists[playlistId].tracks.push(trackId);
-};
+}; */
 
 //addTrackToPlaylist('t03', 'p01');
 //console.log(library.playlists.p01.tracks);
@@ -75,32 +135,32 @@ const addTrackToPlaylist = function(trackId, playlistId) {
 
 // generates a unique id
 // (already implemented: use this for addTrack and addPlaylist)
-const generateUid = function() {
+/* const generateUid = function() {
   return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-};
+}; */
 
 
 // adds a track to the library
-const addTrack = function(name, artist, album) {
+/* const addTrack = function(name, artist, album) {
   const idTrack = generateUid();
   library.tracks[idTrack] = {};
   library.tracks[idTrack].id = idTrack;
   library.tracks[idTrack].name = name;
   library.tracks[idTrack].artist = artist;
   library.tracks[idTrack].album = album;
-};
+}; */
 
 //addTrack('qwesss', 'asdssssss', 'zxcssssss');
 //console.log(library);
 
 // adds a playlist to the library
-const addPlaylist = function(name) {
+/* const addPlaylist = function(name) {
   const idPlaylist = generateUid();
   library.playlists[idPlaylist] = {};
   library.playlists[idPlaylist].id = idPlaylist;
   library.playlists[idPlaylist].name = name;
   library.playlists[idPlaylist].tracks = [];
-};
+}; */
 
 //addPlaylist("asdfgfhh");
 //console.log(library);
@@ -111,7 +171,7 @@ const addPlaylist = function(name) {
 // where the name, artist or album contains the query string (case insensitive)
 // tip: use "string".search("tri")
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/search
-const printSearchResults = function(query) {
+/* const printSearchResults = function(query) {
   let result = [];
   let query2 = query.toLowerCase();
   for (let key in library.tracks) {
@@ -124,6 +184,6 @@ const printSearchResults = function(query) {
     }
   }
   console.log(result);
-};
+}; */
 
 //printSearchResults('model');
