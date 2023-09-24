@@ -33,8 +33,8 @@ const library = {
 const printPlaylists = function() {
   for (let key in library.playlists) {
     console.log(`${key}: ${library.playlists[key].name} - ${library.playlists[key].tracks.length} tracks`);
-  } 
-}
+  }
+};
 
 //printPlaylists();
 
@@ -46,7 +46,7 @@ const printTracks = function() {
   for (let key in library.tracks) {
     console.log(`${key}: ${library.tracks[key].name} by ${library.tracks[key].artist} (${library.tracks[key].album})`);
   }
-}
+};
 
 //printTracks();
 
@@ -64,39 +64,70 @@ const printPlaylist = function(playlistId) {
       }
     }
   }
-}
+};
 
 //printPlaylist('p01');
 
 // adds an existing track to an existing playlist
 const addTrackToPlaylist = function(trackId, playlistId) {
-  library.
-}
+  library.playlists[playlistId].tracks.push(trackId);
+};
+
+//addTrackToPlaylist('t03', 'p01');
+//console.log(library.playlists.p01.tracks);
 
 
 // generates a unique id
 // (already implemented: use this for addTrack and addPlaylist)
 const generateUid = function() {
   return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-}
+};
 
 
 // adds a track to the library
 const addTrack = function(name, artist, album) {
-}
+  const idTrack = generateUid();
+  library.tracks[idTrack] = {};
+  library.tracks[idTrack].id = idTrack;
+  library.tracks[idTrack].name = name;
+  library.tracks[idTrack].artist = artist;
+  library.tracks[idTrack].album = album;
+};
 
+//addTrack('qwesss', 'asdssssss', 'zxcssssss');
+//console.log(library);
 
 // adds a playlist to the library
 const addPlaylist = function(name) {
+  const idPlaylist = generateUid();
+  library.playlists[idPlaylist] = {};
+  library.playlists[idPlaylist].id = idPlaylist;
+  library.playlists[idPlaylist].name = name;
+  library.playlists[idPlaylist].tracks = [];
+};
 
-}
+//addPlaylist("asdfgfhh");
+//console.log(library);
 
 
 // STRETCH:
 // given a query string string, prints a list of tracks
 // where the name, artist or album contains the query string (case insensitive)
-// tip: use "string".search("tri") 
+// tip: use "string".search("tri")
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/search
 const printSearchResults = function(query) {
+  let result = [];
+  let query2 = query.toLowerCase();
+  for (let key in library.tracks) {
+    if (library.tracks[key].name.toLowerCase().search(query2) !== -1) {
+      result.push(key);
+    } else if (library.tracks[key].artist.toLowerCase().search(query2) !== -1) {
+      result.push(key);
+    } else if (library.tracks[key].album.toLowerCase().search(query2) !== -1) {
+      result.push(key);
+    }
+  }
+  console.log(result);
+};
 
-}
+//printSearchResults('model');
